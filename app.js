@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
+const passport = require('./config/passport')
 const db = require('./models')
 const { urlencoded } = require('body-parser')
 const app = express()
@@ -16,6 +17,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(flash())
 
 app.use((req, res, next) => {
@@ -29,4 +32,4 @@ app.listen(port, () => {
   console.log(`running on localhost:${port}`)
 })
 
-require('./routes')(app)
+require('./routes')(app, passport)
