@@ -1,10 +1,11 @@
 const fs = require('fs')//Node.js (file system) 
 const db = require('../models')
 const imgur = require('imgur-node-api')
-const IMGUR_CLIENT_ID = '44b09c25c4bbfe7'
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const Restaurant = db.Restaurant
 
-const adminController = {
+
+let adminController = {
   getRestaurants: (req, res) => {
     return Restaurant.findAll({ raw: true })
       .then(restaurants => {
@@ -85,7 +86,7 @@ const adminController = {
               address: req.body.address,
               opening_hours: req.body.opening_hours,
               description: req.body.description,
-              image: file ? `/upload/${file.originalname}` : restaurant.image
+              image: file ? img.data.link : restaurant.image
             })
               .then((restaurant) => {
                 req.flash('success_msg', "restaurant was successfully to update")
