@@ -3,9 +3,38 @@ const db = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const Restaurant = db.Restaurant
+const User = db.User
 
 
 let adminController = {
+  getUsers: (req, res) => {
+    return User.findAll({ raw: true })
+      .then(users => {
+        return res.render('admin/users', { users: users })
+      })
+  },
+
+  putUser: (req, res) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        if (!user.isAdmin) {
+          user.update({
+            isAdmin: 1
+          })
+        } else {
+          user.update({
+            isAdmin: 0
+          })
+        }
+      })
+      .then((user) => {
+        req.flash('success_messages', "user was successfully to update")
+        res.redirect('/admin/users')
+      })
+  },
+
+
+
   getRestaurants: (req, res) => {
     return Restaurant.findAll({ raw: true })
       .then(restaurants => {
@@ -89,7 +118,7 @@ let adminController = {
               image: file ? img.data.link : restaurant.image
             })
               .then((restaurant) => {
-                req.flash('success_msg', "restaurant was successfully to update")
+                req.flash('success_messages', "restaurant was successfully to update")
                 res.redirect('/admin/restaurants')
               })
           })
@@ -106,7 +135,7 @@ let adminController = {
             image: restaurant.image
           })
             .then((restaurant) => {
-              req.flash('success_msg', "restaurant was successfully to update")
+              req.flash('success_messages', "restaurant was successfully to update")
               res.redirect('/admin/restaurants')
             })
         })
