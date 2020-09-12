@@ -17,23 +17,15 @@ let adminController = {
   putUser: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
-        if (!user.isAdmin) {
-          user.update({
-            isAdmin: 1
+        user.update({
+          isAdmin: !user.isAdmin
+        })
+          .then(() => {
+            req.flash('success_messages', "user was successfully to update")
+            res.redirect('/admin/users')
           })
-        } else {
-          user.update({
-            isAdmin: 0
-          })
-        }
-      })
-      .then((user) => {
-        req.flash('success_messages', "user was successfully to update")
-        res.redirect('/admin/users')
       })
   },
-
-
 
   getRestaurants: (req, res) => {
     return Restaurant.findAll({ raw: true })
