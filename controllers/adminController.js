@@ -14,7 +14,7 @@ const adminController = {
       })
   },
 
-  putUser: (req, res) => {
+  editUser: (req, res) => {
     return User.findByPk(req.params.id)
       .then(user => {
         user.update({
