@@ -1,4 +1,4 @@
-const fs = require('fs')//Node.js (file system) 
+// const fs = require('fs')//Node.js (file system) 
 const db = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
@@ -121,6 +121,7 @@ const adminController = {
       return res.redirect('back')
     }
     const { file } = req
+    console.log(file)
     if (file) {
       imgur.setClientID(IMGUR_CLIENT_ID)
       imgur.upload(file.path, (err, img) => {
