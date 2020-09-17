@@ -1,5 +1,5 @@
 const db = require('../models')
-const { getCategories } = require('./categoryController')
+// const { getCategories } = require('./categoryController')
 const Restaurant = db.Restaurant
 const Category = db.Category
 const pageLimit = 10
