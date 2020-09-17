@@ -54,7 +54,7 @@ const userController = {
       .then(user => {
         return res.render('profile', {
           user: user,
-          // image: user.image || "https://i.imgur.com/d0ldgQZ.png",
+          image: user.image || "https://i.imgur.com/d0ldgQZ.png",
           userSelf: req.user
         })
       })
