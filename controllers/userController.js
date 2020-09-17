@@ -3,6 +3,8 @@ const db = require('../models')
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const User = db.User
+const Comment = db.Comment
+const Restaurant = db.Restaurant
 
 const userController = {
   //註冊的頁面
@@ -48,16 +50,30 @@ const userController = {
 
   getUser: (req, res) => {
     return User.findByPk(req.params.id, {
-      raw: true,
-      nest: true
+      include: [
+        { model: Comment, include: [Restaurant] }
+      ]
     })
       .then(user => {
-        return res.render('profile', {
-          user: user,
+        let comments = user.toJSON().Comments
+        let restNums = []
+        comments.forEach(data => {
+          restId = data.Restaurant.id
+          if (!restNums.includes(restId)) {
+            restNums.push(restId)
+          }
+        })
+        console.log(comments)
+        res.render('profile', {
+          user: user.toJSON(),
           image: user.image || "https://i.imgur.com/d0ldgQZ.png",
-          userSelf: req.user
+          userSelf: req.user,
+          commentCount: restNums.length,
+          comments: comments
         })
       })
+
+
   },
 
   editUser: (req, res) => {

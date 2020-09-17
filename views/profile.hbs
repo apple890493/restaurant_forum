@@ -3,12 +3,19 @@
     <img src="{{image}}" class="card-img" alt="..." style="width: 16rem">
   </div>
   <div class="col-md-8">
-    <div class="card-body">
-      <h1 class="card-title">{{user.name}}</h1>
-      <h4 class="card-text">{{user.email}}</h4>
-      {{#ifCond user.id userSelf.id}}
-      <p><a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a></p>
-      {{/ifCond}}
-    </div>
+    <h1 class="card-title">{{user.name}}</h1>
+    <h4 class="card-text">{{user.email}}</h4>
+    <p class="card-text">{{commentCount}} 已評論餐廳</p>
+    {{#ifCond user.id userSelf.id}}
+    <p><a href="/users/{{user.id}}/edit" class="btn btn-primary">Edit</a></p>
+    {{/ifCond}}
   </div>
+</div>
+<hr />
+<div class="card-body">
+  {{#each comments}}
+  <a href="/restaurants/{{this.Restaurant.id}}">
+    <img src="{{this.Restaurant.image}}" style="width: 6rem">
+  </a>
+  {{/each}}
 </div>
