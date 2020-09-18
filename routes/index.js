@@ -30,8 +30,10 @@ module.exports = (app, passport) => {
   app.get('/', authenticated, (req, res) => res.redirect('restaurants'))
   app.get('/restaurants', authenticated, restController.getRestaurants)
   app.get('/restaurants/feeds', authenticated, restController.getFeeds)
+  // app.get('/restaurants/likes', authenticated, restController.getLikes)
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
   app.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
+
 
   app.post('/comments', authenticated, commentController.postComment)
   app.delete('/comments/:id', authenticated, commentController.deleteComment)
@@ -53,14 +55,14 @@ module.exports = (app, passport) => {
   app.put('/users/:id', upload.single('image'), authenticated, userController.putUser)
   app.post('/favorite/:restaurantId', authenticated, userController.addFavorite)
   app.delete('/favorite/:restaurantId', authenticated, userController.removeFavorite)
+  app.post('/like/:restaurantId', authenticated, userController.addLike)
+  app.delete('/like/:restaurantId', authenticated, userController.removeLike)
 
   app.get('/admin/categories', authenticatedAdmin, categoryController.getCategories)
   app.post('/admin/categories', authenticatedAdmin, categoryController.postCategory)
   app.get('/admin/categories/:id', authenticatedAdmin, categoryController.getCategories)
   app.put('/admin/categories/:id', authenticatedAdmin, categoryController.putCategory)
   app.delete('/admin/categories/:id', authenticatedAdmin, categoryController.deleteCategory)
-
-
 
   app.get('/signup', userController.signUpPage)
   app.post('/signup', userController.signUp)
