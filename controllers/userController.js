@@ -5,6 +5,7 @@ const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 const User = db.User
 const Comment = db.Comment
 const Restaurant = db.Restaurant
+const Favorite = db.Favorite
 
 const userController = {
   //註冊的頁面
@@ -75,7 +76,6 @@ const userController = {
 
 
   },
-
   editUser: (req, res) => {
     return User.findByPk(req.params.id, {
       raw: true,
@@ -85,7 +85,6 @@ const userController = {
         return res.render('editProfile', { user: user })
       })
   },
-
   putUser: (req, res) => {
     const { file } = req
     if (!req.body.name) {
@@ -121,7 +120,32 @@ const userController = {
             })
         })
     }
+  },
+
+  addFavorite: (req, res) => {
+    return Favorite.create({
+      UserId: req.user.id,
+      RestaurantId: req.params.restaurantId
+    })
+      .then(restaruant => {
+        return res.redirect('back')
+      })
+  },
+  removeFavorite: (req, res) => {
+    return Favorite.findOne({
+      where: {
+        UserId: req.user.id,
+        RestaurantId: req.params.restaurantId
+      }
+    })
+      .then(favorite => {
+        favorite.destroy()
+          .then(restaurant => {
+            return res.redirect('back')
+          })
+      })
   }
+
 }
 
 module.exports = userController
