@@ -110,6 +110,29 @@ const restController = {
     })
   },
 
+  getTopRestaurants: (req, res) => {
+    return Restaurant.findAll({
+      include: [
+        { model: User, as: 'FavoritedUsers' }
+      ]
+    })
+      .then(restaurants => {
+        let data = restaurants.map(r => ({
+          ...r.dataValues,
+          description: r.dataValues.description.substring(0, 50),
+          isFavorited: req.user.FavoritedRestaurants.map(d => d.id).includes(r.id),
+          FavoriteCount: r.FavoritedUsers.length
+        }))
+
+        data = data.sort((a, b) => b.FavoriteCount - a.FavoriteCount).slice(0, 10)
+        console.log(data)
+
+        return res.render('topRestaurants', {
+          restaurants: data
+        })
+      })
+  }
+
   // getLikes: (req, res) => {
   //   return Restaurant.findAll({
   //     raw: true,
