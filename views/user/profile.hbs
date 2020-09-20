@@ -12,7 +12,7 @@
       <p class="card-text">followings: {{followings}}</p>
 
       <p>
-        {{#ifCond user.id userSelf.id}}
+        {{#ifCond profile.id userSelf.id}}
         <a href="/users/{{profile.id}}/edit" class="btn btn-primary">Edit</a>
         {{else}}
         {{#if this.isFollowed}}
