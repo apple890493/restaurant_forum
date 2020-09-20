@@ -7,14 +7,14 @@ const userController = require('../controllers/userController')
 const categoryController = require('../controllers/categoryController')
 const commentController = require('../controllers/commentController')
 
-
 module.exports = (app, passport) => {
-  //check is already login or not
+
   const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
       return next()
+    } else {
+      res.redirect('/signin');
     }
-    res.redirect('/signin')
   }
   //check is Admin or not
   const authenticatedAdmin = (req, res, next) => {
@@ -23,15 +23,15 @@ module.exports = (app, passport) => {
         return next()
       }
       return res.redirect('/')
+    } else {
+      res.redirect('/signin')
     }
-    res.redirect('/signin')
   }
 
   app.get('/', authenticated, (req, res) => res.redirect('restaurants'))
   app.get('/restaurants', authenticated, restController.getRestaurants)
   app.get('/restaurants/feeds', authenticated, restController.getFeeds)
   app.get('/restaurants/top', authenticated, restController.getTopRestaurants)
-  // app.get('/restaurants/likes', authenticated, restController.getLikes)
   app.get('/restaurants/:id', authenticated, restController.getRestaurant)
   app.get('/restaurants/:id/dashboard', authenticated, restController.getDashboard)
 

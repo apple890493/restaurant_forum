@@ -29,7 +29,7 @@ const userController = {
             name: req.body.name,
             email: req.body.email,
             password: bcrypt.hashSync(req.body.password, bcrypt.genSaltSync(10), null),
-            image: 'https://i.imgur.com/d0ldgQZ.png'
+            image: 'https://i.imgur.com/Lq0dUBY.png'
           }).then(user => {
             req.flash('success_messages', '成功註冊帳號！')
             return res.redirect('/signin')
@@ -55,24 +55,36 @@ const userController = {
   getUser: (req, res) => {
     return User.findByPk(req.params.id, {
       include: [
-        { model: Comment, include: [Restaurant] }
+        { model: Comment, include: [Restaurant] },
+        { model: Restaurant, as: 'FavoritedRestaurants' },
+        { model: User, as: 'Followers' },
+        { model: User, as: 'Followings' }
       ]
     })
       .then(user => {
+        console.log(user.toJSON())
         let comments = user.toJSON().Comments
-        let restNums = []
+        let favoritedRestaurants = user.toJSON().FavoritedRestaurants.length
+        let followers = user.toJSON().Followers.length
+        let followings = user.toJSON().Followings.length
+        let replyNums = []
         comments.forEach(data => {
           restId = data.Restaurant.id
-          if (!restNums.includes(restId)) {
-            restNums.push(restId)
+          if (!replyNums.includes(restId)) {
+            replyNums.push(restId)
           }
         })
-        // console.log(comments)
+        const isFollowed = req.user.Followings.map(d => d.id).includes(user.id)
+        // console.log(isFollowed)
         res.render('profile', {
           user: user.toJSON(),
           userSelf: req.user,
-          commentCount: restNums.length,
-          comments: comments
+          commentCount: replyNums.length,
+          comments: comments,
+          favoritedRestaurants: favoritedRestaurants,
+          followers: followers,
+          followings: followings,
+          isFollowed: isFollowed
         })
       })
 
