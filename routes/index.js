@@ -8,7 +8,6 @@ const categoryController = require('../controllers/categoryController')
 const commentController = require('../controllers/commentController')
 
 module.exports = (app, passport) => {
-
   const authenticated = (req, res, next) => {
     if (req.isAuthenticated()) {
       return next()

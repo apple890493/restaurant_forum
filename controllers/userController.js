@@ -62,7 +62,6 @@ const userController = {
       ]
     })
       .then(user => {
-        console.log(user.toJSON())
         let comments = user.toJSON().Comments
         let favoritedRestaurants = user.toJSON().FavoritedRestaurants.length
         let followers = user.toJSON().Followers.length
@@ -76,8 +75,8 @@ const userController = {
         })
         const isFollowed = req.user.Followings.map(d => d.id).includes(user.id)
         // console.log(isFollowed)
-        res.render('profile', {
-          user: user.toJSON(),
+        res.render('user/profile', {
+          profile: user.toJSON(),
           userSelf: req.user,
           commentCount: replyNums.length,
           comments: comments,
@@ -87,16 +86,15 @@ const userController = {
           isFollowed: isFollowed
         })
       })
-
-
   },
+
   editUser: (req, res) => {
     return User.findByPk(req.params.id, {
       raw: true,
       nest: true
     })
       .then(user => {
-        return res.render('editProfile', { user: user })
+        return res.render('user/editProfile', { user: user })
       })
   },
   putUser: (req, res) => {
