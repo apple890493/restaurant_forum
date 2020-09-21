@@ -44,4 +44,6 @@ app.listen(port, () => {
   console.log(`running on localhost:${port}`)
 })
 
-require('./routes')(app, passport)
+require('./routes')(app)
+//require('./routes')(app, passport)
+//原作法是直接從 app.js 傳入兩個參數：app & passport
