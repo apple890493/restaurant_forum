@@ -1,4 +1,3 @@
-const adminController = require('../controllers/adminController')
 const db = require('../models')
 const Category = db.Category
 const Restaurant = db.Restaurant
