@@ -1,20 +1,36 @@
 <h1>餐廳後台</h1>
+
 <a href='/admin/restaurants'>Restaurants</a> ||
+<a href='/admin/users'>Users</a> ||
 <a href='/admin/categories'>Categories</a>
+
 <br />
 <br />
 <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
   {{#if category}}
   <form action="/admin/categories/{{category.id}}?_method=PUT" method="POST">
-    <input type="text" placeholder="name" name="name" value="{{category.name}}">
-    <button type="submit">Update</button>
-    <a href="/admin/categories">or Create New</a>
+    <div class="input-group">
+      <input type="text" placeholder="name" name="name" value="{{category.name}}" class="form-control"
+        aria-label="Recipient's username" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-primary">Update</button>
+      </div>
+      <div class="input-group-append">
+        <a class="btn btn-outline-secondary" href="/admin/categories">or Create New</a>
+      </div>
+    </div>
   </form>
   {{else}}
   <form action="/admin/categories" method="POST">
-    <input type="text" placeholder="name" name="name">
-    <button type="submit">Submit</button>
+    <div class="input-group">
+      <input type="text" placeholder="name" name="name" class="form-control" aria-label="Recipient's username"
+        aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-outline-primary">Submit</button>
+      </div>
+    </div>
   </form>
+
   {{/if}}
 </div>
 <br />

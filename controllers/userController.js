@@ -114,7 +114,7 @@ const userController = {
               image: file ? img.data.link : user.image,
             })
               .then((user) => {
-                req.flash('success_messages', "restaurant was successfully to update")
+                req.flash('success_messages', "User was successfully to update")
                 res.redirect(`/users/${req.params.id}`)
               })
           })
@@ -127,7 +127,7 @@ const userController = {
             image: user.image
           })
             .then((user) => {
-              req.flash('success_messages', "restaurant was successfully to update")
+              req.flash('success_messages', "User was successfully to update")
               res.redirect(`/users/${req.params.id}`)
             })
         })
