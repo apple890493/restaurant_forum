@@ -167,18 +167,30 @@ const userController = {
         return res.redirect('back')
       })
   },
+  // removeLike: (req, res) => {
+  //   return Like.findOne({
+  //     where: {
+  //       UserId: req.user.id,
+  //       RestaurantId: req.params.restaurantId
+  //     }
+  //   })
+  //     .then(like => {
+  //       like.destroy()
+  //         .then(restaurant => {
+  //           return res.redirect('back')
+  //         })
+  //     })
+  // },
+
   removeLike: (req, res) => {
-    return Like.findOne({
+    return Like.destroy({
       where: {
         UserId: req.user.id,
         RestaurantId: req.params.restaurantId
       }
     })
-      .then(like => {
-        like.destroy()
-          .then(restaurant => {
-            return res.redirect('back')
-          })
+      .then((restaurant) => {
+        return res.redirect('back')
       })
   },
 

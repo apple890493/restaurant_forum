@@ -1,7 +1,7 @@
 # 餐廳論壇(僅開放測試)
 
 ## View
-<img width="300" height="200" src="https://github.com/apple890493/expense-tracker-2.0/blob/master/pic/4.JPG"/>
+<img width="300" height="200" src="https://github.com/apple890493/restuarant_forum/blob/master/%E6%93%B7%E5%8F%96.JPG"/>
 
 ## 功能列表
 ### 管理者
