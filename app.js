@@ -21,6 +21,7 @@ app.engine('hbs', exphbs({
 }))
 app.set('view engine', 'hbs')
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())//解析json格式
 app.use(session({
   secret: 'ThisIsSecret',
   resave: false,
