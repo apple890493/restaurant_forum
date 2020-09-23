@@ -8,25 +8,6 @@ const Category = db.Category
 const adminService = require('../services/adminService')
 
 const adminController = {
-  getUsers: (req, res) => {
-    return User.findAll({ raw: true })
-      .then(users => {
-        return res.render('admin/users', { users: users })
-      })
-  },
-
-  editUser: (req, res) => {
-    return User.findByPk(req.params.id)
-      .then(user => {
-        user.update({
-          isAdmin: !user.isAdmin
-        })
-          .then(() => {
-            req.flash('success_messages', "User was successfully to update")
-            res.redirect('/admin/users')
-          })
-      })
-  },
 
   getRestaurants: (req, res) => {
     adminService.getRestaurants(req, res, (data) => {
@@ -35,15 +16,9 @@ const adminController = {
   },
 
   createRestaurant: (req, res) => {
-    Category.findAll({
-      raw: true,
-      nest: true
+    adminService.createRestaurant(req, res, (data) => {
+      return res.render('admin/create', data)
     })
-      .then(categories => {
-        return res.render('admin/create', {
-          categories: categories
-        })
-      })
   },
 
   postRestaurant: (req, res) => {
@@ -98,6 +73,18 @@ const adminController = {
     })
   },
 
+  getUsers: (req, res) => {
+    adminService.getUsers(req, res, (data) => {
+      return res.render('admin/users', data)
+    })
+  },
+
+  editUser: (req, res) => {
+    adminService.editUser(req, res, (data) => {
+      req.flash('success_messages', data['message'])
+      return res.redirect('/admin/users')
+    })
+  }
 
 }
 

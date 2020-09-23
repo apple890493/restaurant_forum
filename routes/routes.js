@@ -39,7 +39,7 @@ router.get('/restaurants/:id/dashboard', authenticated, restController.getDashbo
 
 //Comments
 router.post('/comments', authenticated, commentController.postComment)
-router.delete('/comments/:id', authenticated, commentController.deleteComment)
+router.delete('/comments/:id', authenticatedAdmin, commentController.deleteComment)
 
 //Admins
 router.get('/admin', authenticatedAdmin, (req, res) => res.redirect('/admin/restaurants'))
@@ -75,7 +75,6 @@ router.delete('/admin/categories/:id', authenticatedAdmin, categoryController.de
 //Sings
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
-
 router.get('/signin', userController.signInpage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn)
 router.get('/logout', userController.logout)

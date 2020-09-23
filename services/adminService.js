@@ -1,10 +1,12 @@
 const db = require('../models')
 const Category = db.Category
 const Restaurant = db.Restaurant
+const User = db.User
 const imgur = require('imgur-node-api')
 const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID
 
 const adminService = {
+
   getRestaurants: (req, res, callback) => {
     return Restaurant.findAll({
       raw: true,
@@ -24,6 +26,16 @@ const adminService = {
     })
       .then(restaurant => {
         callback({ restaurant: restaurant })
+      })
+  },
+
+  createRestaurant: (req, re, callback) => {
+    Category.findAll({
+      raw: true,
+      nest: true
+    })
+      .then(categories => {
+        callback({ categories: categories })
       })
   },
 
@@ -115,7 +127,26 @@ const adminService = {
             callback({ status: 'success', message: '' })
           })
       })
-  }
+  },
+
+  getUsers: (req, res, callback) => {
+    return User.findAll({ raw: true })
+      .then(users => {
+        callback({ users: users })
+      })
+  },
+
+  editUser: (req, res, callback) => {
+    return User.findByPk(req.params.id)
+      .then(user => {
+        user.update({
+          isAdmin: !user.isAdmin
+        })
+          .then(() => {
+            callback({ status: 'success', message: "User was successfully to update" })
+          })
+      })
+  },
 
 }
 
