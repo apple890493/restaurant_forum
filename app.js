@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const exphbs = require('express-handlebars')
 const flash = require('connect-flash')
 const session = require('express-session')
-const passport = require('./config/passport')
+
 const methodOverride = require('method-override')
 const db = require('./models')
 const { urlencoded } = require('body-parser')
@@ -13,6 +13,8 @@ const port = process.env.PORT || 3000
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
+
+const passport = require('./config/passport')
 
 app.engine('hbs', exphbs({
   defaultLayout: 'main',
