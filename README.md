@@ -26,9 +26,9 @@
 
 ### 啟動方式
 - 將專案clone到本地端
-  `https://github.com/apple890493/restuarant_forum.git`
+  `https://github.com/apple890493/restaurant_forum.git`
 - 進入專案
-  `cd restuarant_forum`
+  `cd restaurant_forum`
 - 下載package
   `npm install`
 - 設定環境變數
