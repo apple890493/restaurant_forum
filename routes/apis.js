@@ -20,9 +20,11 @@ const userController = require('../controllers/api/userController')
 const restController = require('../controllers/api/restController')
 const commentController = require('../controllers/api/commentController')
 
+router.get('/get_current_user', authenticated, userController.getCurrentUser)
+
 
 //Restaurants
-router.get('/', authenticated, (req, res) => res.redirect('restaurants'))
+router.get('/', authenticated, (req, res) => res.redirect('/api/restaurants'))
 router.get('/restaurants', authenticated, restController.getRestaurants)
 router.get('/restaurants/feeds', authenticated, restController.getFeeds)
 router.get('/restaurants/top', authenticated, restController.getTopRestaurants)
@@ -44,6 +46,7 @@ router.get('/admin/categories', authenticated, authenticatedAdmin, categoryContr
 router.post('/admin/categories', authenticated, authenticatedAdmin, categoryController.postCategory)
 router.put('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.putCategory)
 router.delete('/admin/categories/:id', authenticated, authenticatedAdmin, categoryController.deleteCategory)
+
 
 //Users
 router.get('/users/top', authenticated, userController.getTopUser)
