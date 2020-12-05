@@ -22,7 +22,6 @@ const commentController = require('../controllers/api/commentController')
 
 router.get('/get_current_user', authenticated, userController.getCurrentUser)
 
-
 //Restaurants
 router.get('/', authenticated, (req, res) => res.redirect('/api/restaurants'))
 router.get('/restaurants', authenticated, restController.getRestaurants)
